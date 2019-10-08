@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm run lint && react-scripts build && mv build docs",
+    "build": "rm -rf docs && npm run lint && react-scripts build && mv build docs",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "test": "react-scripts test",
