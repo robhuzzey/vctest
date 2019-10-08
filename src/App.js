@@ -9,15 +9,32 @@ import Footer from './Components/Footer'
 import Search from './Components/Search'
 import CardGrid from './Components/CardGrid'
 
+const fetchBeers = async (searchTerm) => {
+  const cleanedSearchTerm = searchTerm.replace(' ', '_')
+  const result = await fetch(`https://api.punkapi.com/v2/beers?food=${cleanedSearchTerm}`)
+    .then(data => data.json())
+    .then(json => {
+      return json
+    })
+  return result
+}
+
 class App extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      beers: [1, 2, 3, 4, 5, 6]
+      beers: []
     }
   }
 
-  fetchBeers () {}
+  async fetchBeers (searchTerm) {
+    const beers = await fetchBeers(searchTerm)
+    this.setState(() => {
+      return {
+        beers
+      }
+    })
+  }
 
   render () {
     return (
@@ -27,14 +44,19 @@ class App extends React.Component {
         <main>
           <Search
             onSearch={searchTerm => {
-              console.log('SEARCH', searchTerm)
+              this.fetchBeers(searchTerm)
             }}
           />
           <CardGrid>
             <Grid container spacing={4}>
-              {this.state.beers.map(card => (
-                <Grid item key={card} xs={12} sm={6} md={4}>
-                  <Beer />
+              {this.state.beers.map(beer => (
+                <Grid item key={beer.id} xs={12} sm={6} md={4}>
+                  <Beer
+                    name={beer.name}
+                    imageUrl={beer.image_url}
+                    description={beer.description}
+                    firstBrewed={beer.first_brewed}
+                  />
                 </Grid>
               ))}
             </Grid>

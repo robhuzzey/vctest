@@ -1,8 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
@@ -11,41 +9,38 @@ const useStyles = makeStyles(theme => ({
   card: {
     height: '100%',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    paddingTop: theme.spacing(1)
   },
   cardMedia: {
-    paddingTop: '56.25%' // 16:9
+    paddingTop: '56.25%', // 16:9
+    backgroundSize: 'contain'
   },
   cardContent: {
     flexGrow: 1
   }
 }))
 
-const Beer = () => {
+const Beer = (props) => {
   const classes = useStyles()
   return (
     <Card className={classes.card}>
       <CardMedia
         className={classes.cardMedia}
-        image='https://source.unsplash.com/random'
+        image={props.imageUrl}
         title='Image title'
       />
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom variant='h5' component='h2'>
-          Heading
+          {props.name}
         </Typography>
         <Typography>
-          This is a media card. You can use this section to describe the content.
+          First brewed: {props.firstBrewed}
+        </Typography>
+        <Typography>
+          {props.description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size='small' color='primary'>
-          View
-        </Button>
-        <Button size='small' color='primary'>
-          Edit
-        </Button>
-      </CardActions>
     </Card>
   )
 }
