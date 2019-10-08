@@ -43,5 +43,6 @@
     "ignore": [
       "docs"
     ]
-  }
+  },
+  "homepage": "http://www.robhuzzey.co.uk/vctest"
 }
