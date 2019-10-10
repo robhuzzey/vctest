@@ -25,22 +25,38 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Search = (props) => {
+const Search = (props = {
+  onSearch: () => {},
+  placeHolderText: 'Search'
+}) => {
   const classes = useStyles()
   const [searchTerm, setState] = useState('')
-  const searchCallback = props.onSearch.bind(this, searchTerm)
+  const searchCallback = () => {
+    props.onSearch(searchTerm)
+    setState('')
+  }
   return (
     <Container className={classes.searchBar} maxWidth='md'>
       <Paper className={classes.root}>
         <InputBase
           className={classes.input}
-          placeholder='Enter your food here'
-          inputProps={{ 'aria-label': 'enter your food' }}
+          placeholder={props.placeHolderText}
+          inputProps={{ 'aria-label': props.placeHolderText }}
           onChange={event => {
             setState(event.target.value)
           }}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              searchCallback()
+            }
+          }}
+          value={searchTerm}
         />
-        <IconButton className={classes.iconButton} aria-label='search' onClick={searchCallback}>
+        <IconButton
+          className={classes.iconButton}
+          aria-label='search'
+          onClick={searchCallback}
+        >
           <SearchIcon />
         </IconButton>
       </Paper>

@@ -23,23 +23,28 @@ const useStyles = makeStyles(theme => ({
 
 const Beer = (props) => {
   const classes = useStyles()
+  if (!props.name) return null
   return (
     <Card className={classes.card}>
       <CardMedia
         className={classes.cardMedia}
-        image={props.imageUrl}
-        title='Image title'
+        image={props.imageUrl || 'https://via.placeholder.com/120x120.png?text=Missing+image'}
+        title={props.imageTitle || props.name}
       />
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom variant='h5' component='h2'>
           {props.name}
         </Typography>
-        <Typography>
-          First brewed: {props.firstBrewed}
-        </Typography>
-        <Typography>
-          {props.description}
-        </Typography>
+        {props.firstBrewed && (
+          <Typography variant='caption' display='block' gutterBottom>
+            First brewed: {props.firstBrewed}
+          </Typography>
+        )}
+        {props.description && (
+          <Typography>
+            {props.description}
+          </Typography>
+        )}
       </CardContent>
     </Card>
   )

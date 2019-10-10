@@ -37,6 +37,9 @@
   },
   "standard": {
     "globals": [
+      "beforeEach",
+      "afterEach",
+      "expect",
       "it",
       "fetch"
     ],
