@@ -8,16 +8,6 @@ import Footer from './Components/Footer'
 import Search from './Components/Search'
 import CardGrid from './Components/CardGrid'
 
-const fetchBeers = async (searchTerm) => {
-  const cleanedSearchTerm = searchTerm.replace(/ /g, '_')
-  const result = await fetch(`https://api.punkapi.com/v2/beers?food=${cleanedSearchTerm}`)
-    .then(data => data.json())
-    .then(json => {
-      return json
-    })
-  return result
-}
-
 class App extends React.Component {
   constructor (props) {
     super(props)
@@ -31,11 +21,16 @@ class App extends React.Component {
   async fetchBeers (searchTerm) {
     this.setState(() => {
       return {
-        fetching: true,
-        beers: []
+        beers: [],
+        fetching: true
       }
     })
-    const beers = await fetchBeers(searchTerm)
+    const cleanedSearchTerm = searchTerm.replace(/ /g, '_')
+    const beers = await fetch(`https://api.punkapi.com/v2/beers?food=${cleanedSearchTerm}`)
+      .then(data => data.json())
+      .then(json => {
+        return json
+      })
     this.setState(() => {
       return {
         beers,
